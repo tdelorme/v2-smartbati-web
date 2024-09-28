@@ -1,0 +1,64 @@
+<div class="register-container">
+  <h1>S'enregistrer</h1>
+  <div>
+    <form [formGroup]="registerForm" (ngSubmit)="this.OnSubmit()">
+      <div class="input-field">
+        <mat-form-field class="medium-width">
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="Ex: email@gmail.com">
+          @if (registerForm.get('email')?.hasError('email') && !registerForm.get('email')?.hasError('required')) {
+            <mat-error>L'adresse email n'est pas valide.</mat-error>
+          }
+          @if (registerForm.get('email')?.hasError('required')) {
+            <mat-error>L'email est requis !</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="input-field"> 
+        <mat-form-field class="medium-width">
+          <mat-label>Confirmation de l'email</mat-label>
+          <input type="email" matInput formControlName="confirmEmail" placeholder="Ex: email@gmail.com">
+          @if (registerForm.get('confirmEmail')?.hasError('email') && !registerForm.get('confirmEmail')?.hasError('required')) {
+            <mat-error>L'adresse email n'est pas valide.</mat-error>
+          }
+          @if (registerForm.get('confirmEmail')?.hasError('required')) {
+            <mat-error>L'email est requis !</mat-error>
+          }
+          @if (registerForm.get('confirmEmail')?.hasError('compare')) {
+            <mat-error>Les deux email ne sont pas identiques</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="input-field">
+        <mat-form-field class="medium-width">
+          <mat-label>Mot de passe</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="minimum 8 de longueur">
+          @if (registerForm.get('password')?.hasError('required')) {
+            <mat-error>Le mot de passe est requis !</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('password')) {
+            <mat-error>Un mot de passe doit être composé de 8 caractères minimum et contenir des caractères alphabétique, numériques et spéciaux (*$...)</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="input-field">
+        <mat-form-field class="medium-width">
+          <mat-label>Confirmation du mot de passe</mat-label>
+          <input type="password" matInput formControlName="confirmPassword" placeholder="minimum 8 de longueur">
+          @if (registerForm.get('confirmPassword')?.hasError('required')) {
+            <mat-error>Le mot de passe est requis !</mat-error>
+          }
+          @if (registerForm.get('confirmPassword')?.hasError('compare')) {
+            <mat-error>Les deux mot de passe ne sont pas identiques !</mat-error>
+          }
+          @if (registerForm.get('password')?.hasError('password')) {
+            <mat-error>Un mot de passe doit être composé de 8 caractères minimum et contenir des caractères alphabétique, numériques et spéciaux (*$...)</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="input-field">
+        <button mat-button type="submit">S'enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+@if (!this.isLoggedIn()) {
+  <div>
+    <mat-toolbar>
+      <span>BatiSmart</span>
+      <span class="spacer"></span>
+      <a routerLink="/register">
+        <mat-icon>app_registration</mat-icon>
+        S'enregistrer
+      </a>
+      <a routerLink="/login">
+        <mat-icon>login</mat-icon>
+        Se connecter
+      </a>
+    </mat-toolbar>
+  </div>
+}
+@if (this.isLoggedIn()) {
+  <div>
+    <mat-toolbar>
+      <span>BatiSmart</span>
+      <span class="spacer"></span>
+      <a routerLink="/dashboard">
+        <mat-icon>home</mat-icon>
+        Tableau de bord
+      </a>
+      <a routerLink="/devis">
+        <mat-icon>receipt_long</mat-icon>
+        Mes devis
+      </a>
+      <a routerLink="/facture">
+        <mat-icon>request_quote</mat-icon>
+        Mes factures
+      </a>
+      <a routerLink="/edit">
+        <mat-icon>edit_square</mat-icon>
+        Editer
+      </a>
+      <span class="spacer"></span>
+      <button mat-icon-button class="icon" (click)="this.logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+}
+

@@ -1,0 +1,36 @@
+<div class="login-container">
+    <h1>Connexion</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="this.onSubmit()">
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput formControlName="email" placeholder="Ex: email@gmail.com">
+                @if (loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')) {
+                <mat-error>L'adresse email n'est pas valide.</mat-error>
+                }
+                @if (loginForm.get('email')?.hasError('required')) {
+                <mat-error>L'email est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Mot de passe</mat-label>
+                <input type="password" matInput formControlName="password" placeholder="minimum 8 de longueur">
+                @if (loginForm.get('password')?.hasError('required')) {
+                <mat-error>Le mot de passe est requis !</mat-error>
+                }
+                @if (loginForm.get('password')?.hasError('password')) {
+                <mat-error>Un mot de passe doit être composé de 8 caractères minimum et contenir des caractères alphabétique,
+                    numériques et spéciaux (*$...)</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <button mat-button type="submit">Se connecter</button>
+        </div>
+    </form>
+</div>
