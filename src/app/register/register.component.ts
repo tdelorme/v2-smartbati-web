@@ -10,7 +10,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmSnackBarComponent } from '../snackbar/confirm-snack-bar/confirm-snack-bar.component';
 import { ErrorSnackBarComponent } from '../snackbar/error-snack-bar/error-snack-bar.component';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',

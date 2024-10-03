@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { LocalService } from './local.storage.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ApiResponse } from './model/api.response.model';
 import { User } from './user/user.model';
 import { Router } from '@angular/router';
 import { LoginRequest } from './login/login.request';
 import { LoginResponse } from './login/login.response';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Injectable({
@@ -31,7 +32,6 @@ export class AuthService {
     this.http.post<LoginResponse>('/api/auth/login', loginRequest)
     .subscribe({
       next: (value) => {
-        console.log(value);
         this.localStorageService.clearData();
         this.localStorageService.saveData(this.tokenKey, value.jwt);
         this.router.navigate(['/dashboard']);
@@ -40,8 +40,7 @@ export class AuthService {
   }
 
   public isLoggedIn(): boolean {
-    const token = this.localStorageService.getData(this.tokenKey);
-    return token != null && this.tokenKey.length > 0;
+    return this.localStorageService.hasData(this.tokenKey);
   }
 
   public logout() {
@@ -52,4 +51,5 @@ export class AuthService {
   public getToken(): string | null {
     return this.isLoggedIn() ? this.localStorageService.getData(this.tokenKey) : null;
   }
+
 }

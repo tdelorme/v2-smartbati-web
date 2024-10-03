@@ -1,0 +1,67 @@
+<div class="client-create-container">
+
+    <h4>Ajout d'un client</h4>
+
+    <form [formGroup]="addClientFormGroup" (submit)="onSubmit()">
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Nom</mat-label>
+                <input type="text" matInput formControlName="lastname" placeholder="Ex: Dupont">
+                @if (addClientFormGroup.get('lastname')?.hasError('required')) {
+                    <mat-error>Le nom de famille est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Prénom</mat-label>
+                <input type="text" matInput formControlName="firstname" placeholder="Ex: Jean">
+                @if (addClientFormGroup.get('firstname')?.hasError('required')) {
+                <mat-error>Le prénom est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>E-Mail</mat-label>
+                <input type="email" matInput formControlName="email" placeholder="Ex: dupont@jean.fr">
+                @if (addClientFormGroup.get('email')?.hasError('required')) {
+                <mat-error>L'adresse e-mail est requis !</mat-error>
+                }
+                @if (addClientFormGroup.get('email')?.hasError('email')) {
+                    <mat-error>L'adresse e-mail n'est pas dans un format valide</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Téléphone</mat-label>
+                <input type="tel" matInput formControlName="phone" placeholder="Ex: 0404040404">
+                @if (addClientFormGroup.get('phone')?.hasError('required')) {
+                <mat-error>Le numero de téléphone est requis !</mat-error>
+                }
+                @if (addClientFormGroup.get('phone')?.hasError('digit')) {
+                <mat-error>Le numero de téléphone n'est pas dans un format valide</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Adresse</mat-label>
+                <input type="text" matInput formControlName="address" placeholder="Ex: 2 chemin du test 45635 TestVille">
+                @if (addClientFormGroup.get('address')?.hasError('required')) {
+                <mat-error>L'adresse est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <button mat-button type="submit">Ajouter le client</button>
+        </div>
+    </form>
+</div>

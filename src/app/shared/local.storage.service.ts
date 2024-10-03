@@ -21,4 +21,11 @@ export class LocalService {
   public clearData() {
     localStorage.clear();
   }
+
+  public hasData(key: string): boolean {
+
+    const value = this.getData(key)
+
+    return value != null && value.length > 0;
+  }
 }

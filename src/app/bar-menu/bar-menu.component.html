@@ -5,11 +5,11 @@
       <span class="spacer"></span>
       <a routerLink="/register">
         <mat-icon>app_registration</mat-icon>
-        S'enregistrer
+        <span>S'enregistrer</span>
       </a>
       <a routerLink="/login">
         <mat-icon>login</mat-icon>
-        Se connecter
+        <span>Se connecter</span>
       </a>
     </mat-toolbar>
   </div>
@@ -21,19 +21,23 @@
       <span class="spacer"></span>
       <a routerLink="/dashboard">
         <mat-icon>home</mat-icon>
-        Tableau de bord
+        <span>Tableau de bord</span>
       </a>
       <a routerLink="/devis">
         <mat-icon>receipt_long</mat-icon>
-        Mes devis
+        <span>Mes devis</span>
       </a>
       <a routerLink="/facture">
         <mat-icon>request_quote</mat-icon>
-        Mes factures
+        <span>Mes factures</span>
+      </a>
+      <a routerLink="/client">
+        <mat-icon>groups</mat-icon>
+        <span>Mes clients</span>
       </a>
       <a routerLink="/edit">
         <mat-icon>edit_square</mat-icon>
-        Editer
+        <span>Editer</span>
       </a>
       <span class="spacer"></span>
       <button mat-icon-button class="icon" (click)="this.logout()">
