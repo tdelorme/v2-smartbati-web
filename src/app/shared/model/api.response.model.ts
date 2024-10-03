@@ -3,3 +3,7 @@ export interface ApiResponse<T> {
     errorMessage: string;
     dateTime: Date;
 }
+
+export interface PageableApiResponse<T> extends ApiResponse<T> {
+    total_count: number;
+}
