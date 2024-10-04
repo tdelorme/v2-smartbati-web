@@ -1,35 +1,6 @@
 <div class="client-container">
 
-    <mat-card class="card" appearance="outlined" (click) = "this.navigate('client/add')">
-        <mat-card-header>
-        </mat-card-header>
-        <mat-icon class="big-icon">person_add</mat-icon>
-        <mat-card-content>
-            <div class="card-content">
-                <p>
-                    Créer un nouveau client
-                </p>
-            </div>
-            
-        </mat-card-content>
-        <mat-card-actions>
-        </mat-card-actions>
-    </mat-card>
-
-    <mat-card class="card" appearance="outlined" (click) = "this.navigate('client/all')">
-        <mat-card-header>
-        </mat-card-header>
-        <mat-icon class="big-icon">group</mat-icon>
-        <mat-card-content>
-            <div class="card-content">
-                <p>
-                    Voir mes clients
-                </p>
-            </div>
-    
-        </mat-card-content>
-        <mat-card-actions>
-        </mat-card-actions>
-    </mat-card>
+    <app-card iconName="person_add" wording="Créer un nouveau client" (click)="this.navigate('client/add')"></app-card>
+    <app-card iconName="group" wording="Voir mes clients" (click)="this.navigate('client/all')"></app-card>
 
 </div>
