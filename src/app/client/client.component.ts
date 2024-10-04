@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { CardComponent } from "../components/card/card.component";
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule],
+  imports: [CardComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.scss'
 })
