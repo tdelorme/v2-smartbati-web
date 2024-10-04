@@ -9,6 +9,7 @@ import { AuthGuard } from './shared/auth.guard';
 import { ClientComponent } from './client/client.component';
 import { ClientCreateComponent } from './client/client-create/client-create.component';
 import { ClientAllComponent } from './client/client-all/client-all.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -20,5 +21,6 @@ export const routes: Routes = [
   { path: 'edit', component: EditComponent, canActivate: [AuthGuard] },
   { path: 'client', component: ClientComponent, canActivate: [AuthGuard]},
   { path: 'client/add', component: ClientCreateComponent, canActivate: [AuthGuard]},
-  { path: 'client/all', component: ClientAllComponent, canActivate: [AuthGuard]}
+  { path: 'client/all', component: ClientAllComponent, canActivate: [AuthGuard]},
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]}
 ];
