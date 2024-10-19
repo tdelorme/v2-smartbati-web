@@ -1,1 +1,113 @@
-<p>settings works!</p>
+<div class="settings-container">
+    <h1>Configuration</h1>
+
+    <form [formGroup]="settingForm" (ngSubmit)="this.onSubmit()">
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput formControlName="email" placeholder="Ex: email@gmail.com" [disabled]="true">
+                @if (settingForm.get('email')?.hasError('email') && !settingForm.get('email')?.hasError('required')) {
+                <mat-error>L'adresse email n'est pas valide.</mat-error>
+                }
+                @if (settingForm.get('email')?.hasError('required')) {
+                <mat-error>L'email est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Prénom</mat-label>
+                <input type="text" matInput formControlName="firstName" placeholder="Ex: Jean">
+                @if (settingForm.get('firstName')?.hasError('alpha') && !settingForm.get('firstName')?.hasError('required')) {
+                <mat-error>Le prénom ne doit contenir que des caractères alphabétiques.</mat-error>
+                }
+                @if (settingForm.get('firstName')?.hasError('required')) {
+                <mat-error>Le prénom est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Nom</mat-label>
+                <input type="text" matInput formControlName="lastName" placeholder="Ex: Dupont">
+                @if (settingForm.get('lastName')?.hasError('alpha') && !settingForm.get('lastName')?.hasError('required')) {
+                <mat-error>Le nom ne doit contenir que des caractères alphabétiques.</mat-error>
+                }
+                @if (settingForm.get('lastName')?.hasError('required')) {
+                <mat-error>Le nom est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Téléphone</mat-label>
+                <input type="tel" matInput formControlName="phone" placeholder="Ex: 0605040302">
+                @if (settingForm.get('phone')?.hasError('digit') && !settingForm.get('phone')?.hasError('required')) {
+                <mat-error>Le numéro de téléphone ne doit contenir que des caractères numériques.</mat-error>
+                }
+                @if (settingForm.get('phone')?.hasError('required')) {
+                <mat-error>Le numéro de téléphone est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Adresse</mat-label>
+                <input type="text" matInput formControlName="address" placeholder="Ex: 35 rue de l'exemple">
+                @if (settingForm.get('address')?.hasError('required')) {
+                <mat-error>L'adresse est requise !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Code postal</mat-label>
+                <input type="text" matInput formControlName="zipCode" placeholder="Ex: 65444">
+                @if (settingForm.get('zipCode')?.hasError('required')) {
+                <mat-error>Le code postal est requis !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Ville</mat-label>
+                <input type="text" matInput formControlName="city" placeholder="Ex: Ville d'exemple">
+                @if (settingForm.get('city')?.hasError('required')) {
+                <mat-error>La ville est requise !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Site web</mat-label>
+                <input type="text" matInput formControlName="website" placeholder="Ex: http://monsiteweb.com">
+                @if (settingForm.get('website')?.hasError('url')) {
+                <mat-error>L'adresse du site web n'est pas valide !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>TVA</mat-label>
+                <input type="number" matInput formControlName="tax" placeholder="Ex: 20 pour un TVA a 20%">
+                @if (settingForm.get('tax')?.hasError('digit') && !settingForm.get('tax')?.hasError('required')) {
+                <mat-error>La TVA ne doit contenir que des caractères numériques.</mat-error>
+                }
+                @if (settingForm.get('tax')?.hasError('required')) {
+                <mat-error>La TVA est requise !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
+                <mat-label>Bas de page</mat-label>
+                <textarea matInput formControlName="footer" placeholder="Toutes les informations qui doivent paraitre en bas de page"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="input-field">
+            <button mat-button type="submit">Sauvegarder mes informations</button>
+        </div>
+    </form>
+
+</div>

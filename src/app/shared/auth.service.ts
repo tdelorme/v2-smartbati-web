@@ -52,4 +52,12 @@ export class AuthService {
     return this.isLoggedIn() ? this.localStorageService.getData(this.tokenKey) : null;
   }
 
+  public getCurrentUser(): Observable<ApiResponse<User>> {
+    return this.http.get<ApiResponse<User>>(`/api/auth/me`);
+  }
+
+  public updateUser(user: User): Observable<ApiResponse<User>> {
+    return this.http.post<ApiResponse<User>>(`/api/auth/update`, user);
+  }
+
 }
