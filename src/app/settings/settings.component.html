@@ -100,6 +100,18 @@
         </div>
         <div class="input-field">
             <mat-form-field class="medium-width">
+                <mat-label>Durée de validité</mat-label>
+                <input type="number" matInput formControlName="due" placeholder="15 pour 15 jours">
+                @if (settingForm.get('due')?.hasError('digit') && !settingForm.get('due')?.hasError('required')) {
+                <mat-error>La durée de validité ne doit contenir que des caractères numériques.</mat-error>
+                }
+                @if (settingForm.get('due')?.hasError('required')) {
+                <mat-error>La durée de validité est requise !</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        <div class="input-field">
+            <mat-form-field class="medium-width">
                 <mat-label>Bas de page</mat-label>
                 <textarea matInput formControlName="footer" placeholder="Toutes les informations qui doivent paraitre en bas de page"></textarea>
             </mat-form-field>

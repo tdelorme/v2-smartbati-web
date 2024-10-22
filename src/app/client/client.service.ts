@@ -19,4 +19,16 @@ export class ClientService {
   public getByPage(index: number, pageSize: number): Observable<PageableApiResponse<Client[]>> {
     return this.http.get<PageableApiResponse<Client[]>>(`/api/client/page/${index}/size/${pageSize}`);
   }
+
+  public getAll(): Observable<ApiResponse<Client[]>> {
+    return this.http.get<ApiResponse<Client[]>>('/api/client/all');
+  }
+
+  public getAllByFilteredName(name: string): Observable<ApiResponse<Client[]>> {
+    return this.http.get<ApiResponse<Client[]>>(`/api/client/filter/${name}`);
+  }
+
+  public getById(id: string): Observable<ApiResponse<Client>> {
+    return this.http.get<ApiResponse<Client>>(`/api/client/${id}`);
+  }
 }

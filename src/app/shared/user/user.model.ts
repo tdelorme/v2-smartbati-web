@@ -13,4 +13,5 @@ export interface User {
     website?: string;
     tax?: number;
     footer?: string;
+    maxValidityBilling?: number;
 }

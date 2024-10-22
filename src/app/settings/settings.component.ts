@@ -44,6 +44,7 @@ export class SettingsComponent implements OnInit{
         city: new FormControl('', [Validators.required]),
         website: new FormControl('', [RxwebValidators.url()]),
         tax: new FormControl('', [Validators.required, RxwebValidators.digit()]),
+        due: new FormControl('', [Validators.required, RxwebValidators.digit()]),
         footer: new FormControl('')
       });
 
@@ -80,6 +81,9 @@ export class SettingsComponent implements OnInit{
         if (this._currentUser.footer) {
           this.settingForm.get('footer')?.setValue(this._currentUser.footer);
         }
+        if (this._currentUser.maxValidityBilling) {
+          this.settingForm.get('due')?.setValue(this._currentUser.maxValidityBilling)
+        }
       });
   }
 
@@ -95,6 +99,7 @@ export class SettingsComponent implements OnInit{
       this._currentUser.website = this.settingForm.get('website')?.value;
       this._currentUser.tax = this.settingForm.get('tax')?.value;
       this._currentUser.footer = this.settingForm.get('footer')?.value;
+      this._currentUser.maxValidityBilling = this.settingForm.get('due')?.value;
     }
 
     this.authService.updateUser(this._currentUser).subscribe({

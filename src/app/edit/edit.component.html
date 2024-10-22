@@ -1,1 +1,135 @@
-<p>edit works!</p>
+<div class="edit-container">
+    <h3>Edition d'un devis</h3>
+
+    <div>
+        <form [formGroup]="this.discountFormGroup" (ngSubmit)="this.setDiscountPercent()"  class="discount-form">
+            <div class="input-field">
+                <mat-form-field class="medium-width">
+                    <mat-label>Client</mat-label>
+                    <input type="text" matInput formControlName="client" placeholder="Le client" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFunction">
+                        @for (option of filteredOptions$ | async; track option) {
+                            <mat-option [value]="option">{{option.firstName + ' ' + option.lastName}}</mat-option>
+                        }
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <mat-form-field class="small-width">
+                    <mat-label>Réduction à appliquer</mat-label>
+                    <input type="number" matInput formControlName="discount" placeholder="0% par defaut">
+                    @if (discountFormGroup.get('discount')?.hasError('digit')) {
+                    <mat-error>La réduction ne doit contenir que des caractères numériques !</mat-error>
+                    }
+                </mat-form-field>
+                <button mat-button type="submit" [disabled]="!this.discountFormGroup.valid">Appliquer la réduction</button>
+            </div>
+        </form>
+    </div>
+    @if (isClientNameFilled()) {
+    <div class="inline-form">
+        <form [formGroup]="this.editFormGroup" (ngSubmit)="this.onSubmit()" class="edit-form">
+            <div class="input-field">
+                <mat-form-field class="medium-width">
+                    <mat-label>Ligne ou Categorie</mat-label>
+                    <mat-select formControlName="type" [(value)]="selected">
+                        <mat-option value="category">Categorie</mat-option>
+                        <mat-option value="line">Ligne</mat-option>
+                    </mat-select>
+                    @if (editFormGroup.get('type')?.hasError('required')) {
+                        <mat-error>Le type de ligne est requis !</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="input-field">
+                <mat-form-field class="medium-width">
+                    <mat-label>Designation</mat-label>
+                    <input type="text" matInput formControlName="designation" placeholder="Carrelage">
+                    @if (editFormGroup.get('designation')?.hasError('required')) {
+                        <mat-error>La désignation est requise !</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            @if (this.selected === 'line') {
+                <div class="input-field">
+                    <mat-form-field class="medium-width">
+                        <mat-label>Quantité</mat-label>
+                        <input type="number" matInput formControlName="quantity" placeholder="5">
+                        @if (editFormGroup.get('quantity')?.hasError('digit')) {
+                            <mat-error>La quantité doit être numérique !</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="input-field">
+                    <mat-form-field class="medium-width">
+                        <mat-label>Prix unitaire</mat-label>
+                        <input type="number" matInput formControlName="price" placeholder="50">
+                        @if (editFormGroup.get('quantity')?.hasError('digit')) {
+                            <mat-error>Le prix doit être numérique !</mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            }
+            <div class="input-field">
+                <button mat-button type="submit" [disabled]="!this.editFormGroup.valid">Ajouter la ligne</button>
+            </div>
+        </form>
+    </div>
+    <div class="display-edit">
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            @for (line of this.designations; track line) {
+                @if (line.designation.typeDesignation === 'CATEGORY') {
+                    <tr class="category">
+                        <td colspan="4">{{line.designation.name}}</td>
+                        <td class="icon">
+                            <mat-icon (click)="deleteCategory(line)">delete</mat-icon>
+                        </td>
+                    </tr>
+                }
+                @if (line.designation.typeDesignation === 'LINE') {
+                    <tr class="line">
+                        <td>{{line.designation.name}}</td>
+                        <td>{{line.designation.price}}</td>
+                        <td>{{line.quantity}}</td>
+                        <td>{{getLineTotal(line)}}</td>
+                        <td class="icon">
+                            <mat-icon (click)="deleteLine(line)">delete</mat-icon>
+                        </td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td colspan="3"></td>
+                <td>Sous total</td>
+                <td>{{calculSubTotal()}} €</td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td>TVA {{getTax()}}%</td>
+                <td>{{calculTax()}} €</td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td>Reduction {{this.discount}}%</td>
+                <td>- {{this.calculDiscount()}} €</td>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td>Total</td>
+                <td>{{calculTotal()}} €</td>
+            </tr>
+        </table>
+    </div>
+    <div class="generate-inline">
+        <button mat-button type="button" (click)="this.saveBilling()">Sauvegarder le devis</button>
+    </div>
+    }
+</div>
+
