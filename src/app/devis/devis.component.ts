@@ -3,10 +3,9 @@ import { Billing } from '../shared/model/billing.model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTableModule } from '@angular/material/table';
+import { MatTable, MatTableModule } from '@angular/material/table';
 import { BillingService } from '../shared/billing/billing.service';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
-import { ClientService } from '../client/client.service';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -26,10 +25,9 @@ export class DevisComponent implements AfterViewInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table!: MatTable<Billing>;
 
-  constructor(private billingService: BillingService,
-              private clientService: ClientService
-  ) {}
+  constructor(private billingService: BillingService) {}
 
   ngAfterViewInit(): void {
       this.paginator.page.pipe(
@@ -65,11 +63,22 @@ export class DevisComponent implements AfterViewInit{
   }
   
   transformToInvoice(id: string) {
-
+    this.billingService.transform(id).subscribe(result => {
+      this.reRenderTable(result.data, id);
+    });
   }
 
   deleteBilling(id: string) {
+    this.billingService.delete(id).subscribe(result => {
+      this.reRenderTable(result.data, id);
+    });
+  }
 
+  private reRenderTable(isDeleted: boolean, id: string) {
+    if (isDeleted) {
+      this.data.splice(this.data.findIndex(d => d.id === id) ,1);
+      this.table.renderRows();
+    }
   }
 
 }

@@ -17,6 +17,7 @@ import { debounceTime, map, Observable, startWith, switchMap } from 'rxjs';
 import { ApiResponse } from '../shared/model/api.response.model';
 import { Billing } from '../shared/model/billing.model';
 import { BillingService } from '../shared/billing/billing.service';
+import { DesignationService } from '../shared/designation/designation.service';
 
 @Component({
   selector: 'app-edit',
@@ -41,7 +42,7 @@ export class EditComponent implements OnInit{
   public designations: DesignationLine[] = [];
   public editFormGroup!: FormGroup;
   public discountFormGroup!: FormGroup;
-  selected: string = "";
+  selected: string = '';
   tax: number = 0;
   taxAmount: number = 0;
   discount: number = 0;
@@ -51,10 +52,15 @@ export class EditComponent implements OnInit{
   clientAutoCompleteControl = new FormControl();
   clientSelected!: Client;
 
+  filteredOptionsDesignation$: Observable<Designation[]> = new Observable();
+  designationAutoCompleteControl = new FormControl();
+  designationSelected!: Designation;
+
 
   constructor(private userService: AuthService,
               private clientService: ClientService,
-              private billingService: BillingService
+              private billingService: BillingService,
+              private designationService: DesignationService
   ) {}
 
   ngOnInit(): void {
@@ -76,10 +82,20 @@ export class EditComponent implements OnInit{
   
     this.editFormGroup = new FormGroup({
       type: new FormControl('', Validators.required),
-      designation: new FormControl('', [Validators.required]),
+      designation: this.designationAutoCompleteControl,
       quantity: new FormControl('', RxwebValidators.digit()),
       price: new FormControl('', RxwebValidators.digit())
     });
+
+    this.filteredOptionsDesignation$ = this.designationAutoCompleteControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        return this.loadDesignation(value).pipe(
+          map(designation => designation.data)
+        )
+      })
+    )
 
     this.userService.getCurrentUser().subscribe(user => {
       if (user && user.data && user.data.tax) {
@@ -180,6 +196,10 @@ export class EditComponent implements OnInit{
     return client && client.firstName && client.lastName ? client.firstName + ' ' + client.lastName : '';
   }
 
+  public displayFunctionDesignation(designation: Designation) {
+    return designation && designation.name ? designation.name : '';
+  }
+
   public saveBilling() {
 
     const billing: Billing = {
@@ -211,7 +231,30 @@ export class EditComponent implements OnInit{
     }
   }
 
+  loadDesignation(designation: string | Designation): Observable<ApiResponse<Designation[]>> {
+    if (typeof designation === 'string') {
+      if (!designation || designation === '') {
+        return this.designationService.getAll();
+      } else {
+        return this.designationService.getAllByFilteredName(designation)
+      }
+    } else {
+      return new Observable(observer => {
+        const response: ApiResponse<Designation[]> = {
+          data: [designation],
+        }
+        observer.next(response)
+      })
+    }
+  }
+
   public isClientNameFilled() {
     return this.clientSelected ? true : false;
+  }
+
+  public onSelectionDesignation(designation: Designation) {
+    this.editFormGroup.get('type')?.setValue(designation.typeDesignation?.toLowerCase());
+    this.selected = designation.typeDesignation ? designation.typeDesignation.toLowerCase() : '';
+    this.editFormGroup.get('price')?.setValue(designation.price);
   }
 }

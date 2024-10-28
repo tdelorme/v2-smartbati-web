@@ -44,7 +44,12 @@
             <div class="input-field">
                 <mat-form-field class="medium-width">
                     <mat-label>Designation</mat-label>
-                    <input type="text" matInput formControlName="designation" placeholder="Carrelage">
+                    <input type="text" matInput formControlName="designation" placeholder="Carrelage" [matAutocomplete]="des">
+                    <mat-autocomplete #des="matAutocomplete" [displayWith]="displayFunctionDesignation">
+                        @for (option of filteredOptionsDesignation$ | async; track option) {
+                        <mat-option [value]="option" (onSelectionChange)="onSelectionDesignation(option)">{{option.name}}</mat-option>
+                        }
+                    </mat-autocomplete>
                     @if (editFormGroup.get('designation')?.hasError('required')) {
                         <mat-error>La désignation est requise !</mat-error>
                     }
