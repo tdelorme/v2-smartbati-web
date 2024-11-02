@@ -111,10 +111,11 @@ export class EditComponent implements OnInit{
 
     if (this.editFormGroup.valid) {
       const type = '' + this.editFormGroup.get('type')?.value
-
+      const designationValue = this.editFormGroup.get('designation')?.value;
+      
       const designation: Designation = {
         typeDesignation: type.toUpperCase(),
-        name: this.editFormGroup.get('designation')?.value.name,
+        name: designationValue.name ? designationValue.name : designationValue,
         price: this.editFormGroup.get('price')?.value,
       }
 
