@@ -128,6 +128,10 @@ export class EditComponent implements OnInit{
     }
 
     console.log('designations loaded', this.designations)
+    this.editFormGroup.get('type')?.setValue('');
+    this.editFormGroup.get('designation')?.setValue('');
+    this.editFormGroup.get('price')?.setValue('');
+    this.editFormGroup.get('quantity')?.setValue(0);
   }
 
   public getLineTotal(line: DesignationLine) {
