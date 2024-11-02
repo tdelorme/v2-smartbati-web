@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatError, MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +18,10 @@ import { ApiResponse } from '../shared/model/api.response.model';
 import { Billing, TypeBilling } from '../shared/model/billing.model';
 import { BillingService } from '../shared/billing/billing.service';
 import { DesignationService } from '../shared/designation/designation.service';
+import { ConfirmSnackBarComponent } from '../snackbar/confirm-snack-bar/confirm-snack-bar.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ErrorSnackBarComponent } from '../snackbar/error-snack-bar/error-snack-bar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -32,6 +36,7 @@ import { DesignationService } from '../shared/designation/designation.service';
     MatButtonModule,
     RxReactiveFormsModule,
     MatIconModule,
+    MatSnackBarModule,
     MatError,
     AsyncPipe,
     DecimalPipe],
@@ -57,11 +62,13 @@ export class EditComponent implements OnInit{
   designationAutoCompleteControl = new FormControl();
   designationSelected!: Designation;
 
+  private _snackBar = inject(MatSnackBar);
 
   constructor(private userService: AuthService,
               private clientService: ClientService,
               private billingService: BillingService,
-              private designationService: DesignationService
+              private designationService: DesignationService,
+              private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -127,11 +134,8 @@ export class EditComponent implements OnInit{
       this.designations.push(designationLine);  
     }
 
-    console.log('designations loaded', this.designations)
-    this.editFormGroup.get('type')?.setValue('');
-    this.editFormGroup.get('designation')?.setValue('');
-    this.editFormGroup.get('price')?.setValue('');
-    this.editFormGroup.get('quantity')?.setValue(0);
+    this.resetDesignationForm();
+
   }
 
   public getLineTotal(line: DesignationLine) {
@@ -215,7 +219,19 @@ export class EditComponent implements OnInit{
       discountPercent: this.discount
     }
 
-    this.billingService.create(billing).subscribe();
+    this.billingService.create(billing).subscribe({
+      next: (response) => {
+        this._snackBar.openFromComponent(ConfirmSnackBarComponent, {
+          duration: 5000,
+        });
+        this.router.navigate(['devis'])
+      },
+      error: (err) => {
+        this._snackBar.openFromComponent(ErrorSnackBarComponent, {
+          duration: 5000,
+        });
+      }
+    });
 
   }
 
@@ -262,5 +278,12 @@ export class EditComponent implements OnInit{
     this.editFormGroup.get('type')?.setValue(designation.typeDesignation?.toLowerCase());
     this.selected = designation.typeDesignation ? designation.typeDesignation.toLowerCase() : '';
     this.editFormGroup.get('price')?.setValue(designation.price);
+  }
+
+  private resetDesignationForm() {
+    this.editFormGroup.get('type')?.setValue('');
+    this.editFormGroup.get('designation')?.setValue('');
+    this.editFormGroup.get('price')?.setValue('');
+    this.editFormGroup.get('quantity')?.setValue(0);
   }
 }
