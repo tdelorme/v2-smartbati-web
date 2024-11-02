@@ -1,0 +1,11 @@
+.icon-table {
+    cursor: pointer;
+}
+
+.icon-table:hover {
+    color: var(--mdc-text-button-label-text-color, var(--mat-app-primary));
+}
+
+.late-payment {
+    color: red;
+}

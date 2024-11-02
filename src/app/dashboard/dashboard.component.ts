@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { WaitingInvoicesComponent } from "./waiting-invoices/waiting-invoices.component";
-import { WaitingQuoteComponent } from "./waiting-quote/waiting-quote.component";
-import { InvoicesComponent } from "./invoices/invoices.component";
+import { DevisComponent } from "../devis/devis.component";
+import { FactureComponent } from "../facture/facture.component";
+import { TypeBilling } from '../shared/model/billing.model';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [WaitingInvoicesComponent, WaitingQuoteComponent, InvoicesComponent],
+  imports: [DevisComponent, FactureComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-
+  PAID = TypeBilling.PAID;
+  INVOICE = TypeBilling.INVOICE;
 }

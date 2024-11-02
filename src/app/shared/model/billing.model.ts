@@ -12,7 +12,14 @@ export interface Billing {
     userId?: string;
     date?: Date;
     dueDate?: Date;
-    type: 'QUOTE'|'INVOICE';
+    type: TypeBilling;
     generatedFile?: string;
     discountPercent: number; 
+}
+
+export enum TypeBilling {
+    QUOTE,
+    INVOICE,
+    PAID,
+    ALL
 }

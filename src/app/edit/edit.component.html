@@ -113,22 +113,22 @@
             <tr>
                 <td colspan="3"></td>
                 <td>Sous total</td>
-                <td>{{calculSubTotal()}} €</td>
+                <td>{{calculSubTotal() | number: '1.2-2'}} €</td>
             </tr>
             <tr>
                 <td colspan="3"></td>
                 <td>TVA {{getTax()}}%</td>
-                <td>{{calculTax()}} €</td>
+                <td>{{calculTax() | number: '1.2-2'}} €</td>
             </tr>
             <tr>
                 <td colspan="3"></td>
                 <td>Reduction {{this.discount}}%</td>
-                <td>- {{this.calculDiscount()}} €</td>
+                <td>- {{this.calculDiscount() | number: '1.2'}} €</td>
             </tr>
             <tr>
                 <td colspan="3"></td>
                 <td>Total</td>
-                <td>{{calculTotal()}} €</td>
+                <td>{{calculTotal() | number: '1.2'}} €</td>
             </tr>
         </table>
     </div>

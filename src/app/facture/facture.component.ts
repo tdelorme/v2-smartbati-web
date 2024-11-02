@@ -1,17 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
-import { Billing } from '../shared/model/billing.model';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Billing, TypeBilling } from '../shared/model/billing.model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { BillingService } from '../shared/billing/billing.service';
-import { catchError, map, of, startWith, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { PageableApiResponse } from '../shared/model/api.response.model';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-facture',
   standalone: true,
-  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule],
+  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltip, DecimalPipe, DatePipe],
   templateUrl: './facture.component.html',
   styleUrl: './facture.component.scss'
 })
@@ -19,7 +22,12 @@ export class FactureComponent {
   displayedColumns: string[] = ['number', 'client', 'totalIncludingTax', 'type', 'due', 'actions'];
   data: Billing[] = []
   resultsLength = 0
+  @Input()
   pageSize = 10
+  @Input()
+  title = 'Liste des factures';
+  @Input()
+  type: TypeBilling = TypeBilling.ALL;
   isLoadingResults = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -33,7 +41,22 @@ export class FactureComponent {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.billingService.getInvoiceByPage(this.paginator.pageIndex, this.pageSize).pipe(catchError(() => of(null)));
+          let result: Observable<PageableApiResponse<Billing[]> | null> = of(null);
+
+          switch(this.type) {
+            case TypeBilling.INVOICE:
+              result = this.billingService.getInvoiceNotPaidByPage(this.paginator.pageIndex, this.pageSize).pipe(catchError(() => of(null)));
+              break;
+            case TypeBilling.PAID:
+              result = this.billingService.getInvoicePaidByPage(this.paginator.pageIndex, this.pageSize).pipe(catchError(() => of(null)));
+              break;
+            default:
+              result = this.billingService.getInvoiceByPage(this.paginator.pageIndex, this.pageSize).pipe(catchError(() => of(null)));
+              break;
+
+          }
+
+          return result;
         }),
         map(data => {
           this.isLoadingResults = false;
@@ -86,5 +109,12 @@ export class FactureComponent {
       case 'INVOICE_PAID': return 'Facture payé';
       default: return 'DEVIS';
     }
+  }
+
+  getClassPayment(line: Billing) {
+    if ((TypeBilling.INVOICE == this.type || TypeBilling.ALL == this.type) && line.dueDate ? new Date() > new Date(line.dueDate) : false) {
+      return 'late-payment';
+    }
+    return '';
   }
 }

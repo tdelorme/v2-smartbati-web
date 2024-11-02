@@ -12,10 +12,10 @@ import { AuthService } from '../shared/auth.service';
 import { ClientService } from '../client/client.service';
 import { Client } from '../client/model/client.model';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 import { debounceTime, map, Observable, startWith, switchMap } from 'rxjs';
 import { ApiResponse } from '../shared/model/api.response.model';
-import { Billing } from '../shared/model/billing.model';
+import { Billing, TypeBilling } from '../shared/model/billing.model';
 import { BillingService } from '../shared/billing/billing.service';
 import { DesignationService } from '../shared/designation/designation.service';
 
@@ -33,7 +33,8 @@ import { DesignationService } from '../shared/designation/designation.service';
     RxReactiveFormsModule,
     MatIconModule,
     MatError,
-    AsyncPipe],
+    AsyncPipe,
+    DecimalPipe],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
@@ -113,7 +114,7 @@ export class EditComponent implements OnInit{
 
       const designation: Designation = {
         typeDesignation: type.toUpperCase(),
-        name: this.editFormGroup.get('designation')?.value,
+        name: this.editFormGroup.get('designation')?.value.name,
         price: this.editFormGroup.get('price')?.value,
       }
 
@@ -205,7 +206,7 @@ export class EditComponent implements OnInit{
     const billing: Billing = {
       lineQuantities: this.designations,
       clientId: this.clientSelected.id ? this.clientSelected.id : '',
-      type: 'QUOTE',
+      type: TypeBilling.QUOTE,
       discountPercent: this.discount
     }
 

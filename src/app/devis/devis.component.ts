@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { Billing } from '../shared/model/billing.model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -7,11 +7,13 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { BillingService } from '../shared/billing/billing.service';
 import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-devis',
   standalone: true,
-  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule],
+  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltipModule, DecimalPipe, DatePipe],
   templateUrl: './devis.component.html',
   styleUrl: './devis.component.scss'
 })
@@ -20,7 +22,10 @@ export class DevisComponent implements AfterViewInit{
   displayedColumns: string[] = ['number', 'client', 'totalIncludingTax', 'date', 'due', 'actions'];
   data: Billing[] = []
   resultsLength = 0
+  @Input()
   pageSize = 10
+  @Input()
+  title = 'Liste des devis'
   isLoadingResults = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

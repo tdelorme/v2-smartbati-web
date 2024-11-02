@@ -1,4 +1,4 @@
-<h4>Liste des devis</h4>
+<h4>{{title}}</h4>
 
 <div class="client-container mat-elevation-z8">
     @if (this.isLoadingResults) {
@@ -18,22 +18,22 @@
             </ng-container>
             <ng-container matColumnDef="totalIncludingTax">
                 <th mat-header-cell *matHeaderCellDef>Total TTC</th>
-                <td mat-cell *matCellDef="let row">{{row.totalIncludingTaxes}} €</td>
+                <td mat-cell *matCellDef="let row">{{row.totalIncludingTaxes | number: '1.2'}} €</td>
             </ng-container>
             <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef>Date</th>
-                <td mat-cell *matCellDef="let row">{{row.date}}</td>
+                <td mat-cell *matCellDef="let row">{{row.date | date:'d/M/y'}}</td>
             </ng-container>
             <ng-container matColumnDef="due">
                 <th mat-header-cell *matHeaderCellDef>Date de validité max.</th>
-                <td mat-cell *matCellDef="let row">{{row.dueDate}}</td>
+                <td mat-cell *matCellDef="let row">{{row.dueDate | date:'d/M/y'}}</td>
             </ng-container>
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let row">
-                    <mat-icon (click)="downloadQuote(row.generatedFile)">download</mat-icon>
-                    <mat-icon (click)="transformToInvoice(row.id)">request_quote</mat-icon>
-                    <mat-icon (click)="deleteBilling(row.id)">delete</mat-icon>
+                    <mat-icon (click)="downloadQuote(row.generatedFile)" #tooltip="matTooltip" matTooltip="Télécharger le devis" class="icon-table">download</mat-icon>
+                    <mat-icon (click)="transformToInvoice(row.id)" #tooltip="matTooltip" matTooltip="Transformer le devis en facture" class="icon-table">request_quote</mat-icon>
+                    <mat-icon (click)="deleteBilling(row.id)" #tooltip="matTooltip" matTooltip="Supprimer le devis" class="icon-table">delete</mat-icon>
                 </td>
             </ng-container>
 
