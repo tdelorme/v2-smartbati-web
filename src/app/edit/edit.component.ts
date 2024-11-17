@@ -91,6 +91,7 @@ export class EditComponent implements OnInit{
     this.editFormGroup = new FormGroup({
       type: new FormControl('', Validators.required),
       designation: this.designationAutoCompleteControl,
+      description: new FormControl(''),
       quantity: new FormControl('', RxwebValidators.digit()),
       price: new FormControl('', RxwebValidators.digit())
     });
@@ -99,7 +100,7 @@ export class EditComponent implements OnInit{
       startWith(''),
       debounceTime(300),
       switchMap(value => {
-        return this.loadDesignation(value).pipe(
+        return this.loadDesignation(value, this.editFormGroup.get('type')?.value).pipe(
           map(designation => designation.data)
         )
       })
@@ -123,6 +124,7 @@ export class EditComponent implements OnInit{
       const designation: Designation = {
         typeDesignation: type.toUpperCase(),
         name: designationValue.name ? designationValue.name : designationValue,
+        description: this.editFormGroup.get('description')?.value,
         price: this.editFormGroup.get('price')?.value,
       }
 
@@ -253,12 +255,16 @@ export class EditComponent implements OnInit{
     }
   }
 
-  loadDesignation(designation: string | Designation): Observable<ApiResponse<Designation[]>> {
+  loadDesignation(designation: string | Designation, type: string): Observable<ApiResponse<Designation[]>> {
     if (typeof designation === 'string') {
-      if (!designation || designation === '') {
-        return this.designationService.getAll();
+      if ((!designation || designation === '') && !type) {
+          return this.designationService.getAll();
       } else {
-        return this.designationService.getAllByFilteredName(designation)
+        if (type) {
+          return this.designationService.getAllByTypeDesignation(type);
+        } else {
+          return this.designationService.getAllByFilteredName(designation, type)
+        }
       }
     } else {
       return new Observable(observer => {
@@ -270,6 +276,18 @@ export class EditComponent implements OnInit{
     }
   }
 
+  onTypeDesignationChange() {
+    this.filteredOptionsDesignation$ = this.designationAutoCompleteControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      switchMap(value => {
+        return this.loadDesignation(value, this.editFormGroup.get('type')?.value).pipe(
+          map(designation => designation.data)
+        )
+      })
+    )
+  }
+
   public isClientNameFilled() {
     return this.clientSelected ? true : false;
   }
@@ -277,12 +295,14 @@ export class EditComponent implements OnInit{
   public onSelectionDesignation(designation: Designation) {
     this.editFormGroup.get('type')?.setValue(designation.typeDesignation?.toLowerCase());
     this.selected = designation.typeDesignation ? designation.typeDesignation.toLowerCase() : '';
+    this.editFormGroup.get('description')?.setValue(designation.description);
     this.editFormGroup.get('price')?.setValue(designation.price);
   }
 
   private resetDesignationForm() {
     this.editFormGroup.get('type')?.setValue('');
     this.editFormGroup.get('designation')?.setValue('');
+    this.editFormGroup.get('description')?.setValue('');
     this.editFormGroup.get('price')?.setValue('');
     this.editFormGroup.get('quantity')?.setValue(0);
   }

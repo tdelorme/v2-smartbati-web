@@ -15,7 +15,11 @@ export class DesignationService {
     return this.http.get<ApiResponse<Designation[]>>('/api/designation');
   }
 
-  getAllByFilteredName(designation: string): Observable<ApiResponse<Designation[]>> {
-    return this.http.get<ApiResponse<Designation[]>>(`/api/designation/${designation}`);
+  getAllByFilteredName(designation: string, type: string): Observable<ApiResponse<Designation[]>> {
+    return this.http.get<ApiResponse<Designation[]>>(`/api/designation/${type}/${designation}`);
+  }
+
+  getAllByTypeDesignation(type: string): Observable<ApiResponse<Designation[]>> {
+    return this.http.get<ApiResponse<Designation[]>>(`/api/designation/${type}`);
   }
 }

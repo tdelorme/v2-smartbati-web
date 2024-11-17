@@ -28,51 +28,66 @@
     </div>
     @if (isClientNameFilled()) {
     <div class="inline-form">
-        <form [formGroup]="this.editFormGroup" (ngSubmit)="this.onSubmit()" class="edit-form">
-            <div class="input-field">
-                <mat-form-field class="medium-width">
-                    <mat-label>Ligne ou Categorie</mat-label>
-                    <mat-select formControlName="type" [(value)]="selected">
-                        <mat-option value="category">Categorie</mat-option>
-                        <mat-option value="line">Ligne</mat-option>
-                    </mat-select>
-                    @if (editFormGroup.get('type')?.hasError('required')) {
-                        <mat-error>Le type de ligne est requis !</mat-error>
-                    }
-                </mat-form-field>
-            </div>
-            <div class="input-field">
-                <mat-form-field class="medium-width">
-                    <mat-label>Designation</mat-label>
-                    <input type="text" matInput formControlName="designation" placeholder="Carrelage" [matAutocomplete]="des">
-                    <mat-autocomplete #des="matAutocomplete" [displayWith]="displayFunctionDesignation">
-                        @for (option of filteredOptionsDesignation$ | async; track option) {
-                        <mat-option [value]="option" (onSelectionChange)="onSelectionDesignation(option)">{{option.name}}</mat-option>
-                        }
-                    </mat-autocomplete>
-                    @if (editFormGroup.get('designation')?.hasError('required')) {
-                        <mat-error>La désignation est requise !</mat-error>
-                    }
-                </mat-form-field>
-            </div>
-            @if (this.selected === 'line') {
+        <form [formGroup]="this.editFormGroup" (ngSubmit)="this.onSubmit()">
+            <div class="edit-form">
                 <div class="input-field">
                     <mat-form-field class="medium-width">
-                        <mat-label>Quantité</mat-label>
-                        <input type="number" matInput formControlName="quantity" placeholder="5">
-                        @if (editFormGroup.get('quantity')?.hasError('digit')) {
-                            <mat-error>La quantité doit être numérique !</mat-error>
+                        <mat-label>Ligne ou Categorie</mat-label>
+                        <mat-select formControlName="type" [(value)]="selected" (selectionChange)="onTypeDesignationChange()">
+                            <mat-option value="category">Categorie</mat-option>
+                            <mat-option value="line">Ligne</mat-option>
+                        </mat-select>
+                        @if (editFormGroup.get('type')?.hasError('required')) {
+                            <mat-error>Le type de ligne est requis !</mat-error>
                         }
                     </mat-form-field>
                 </div>
                 <div class="input-field">
                     <mat-form-field class="medium-width">
-                        <mat-label>Prix unitaire</mat-label>
-                        <input type="number" matInput formControlName="price" placeholder="50">
-                        @if (editFormGroup.get('quantity')?.hasError('digit')) {
-                            <mat-error>Le prix doit être numérique !</mat-error>
+                        <mat-label>Designation</mat-label>
+                        <input type="text" matInput formControlName="designation" placeholder="Carrelage" [matAutocomplete]="des">
+                        <mat-autocomplete #des="matAutocomplete" [displayWith]="displayFunctionDesignation">
+                            @for (option of filteredOptionsDesignation$ | async; track option) {
+                            <mat-option [value]="option" (onSelectionChange)="onSelectionDesignation(option)">{{option.name}}</mat-option>
+                            }
+                        </mat-autocomplete>
+                        @if (editFormGroup.get('designation')?.hasError('required')) {
+                            <mat-error>La désignation est requise !</mat-error>
                         }
                     </mat-form-field>
+                </div>
+                @if (this.selected === 'line') {
+            
+                        <div class="input-field">
+                            <mat-form-field class="medium-width">
+                                <mat-label>Quantité</mat-label>
+                                <input type="number" matInput formControlName="quantity" placeholder="5">
+                                @if (editFormGroup.get('quantity')?.hasError('digit')) {
+                                    <mat-error>La quantité doit être numérique !</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="input-field">
+                            <mat-form-field class="medium-width">
+                                <mat-label>Prix unitaire</mat-label>
+                                <input type="number" matInput formControlName="price" placeholder="50">
+                                @if (editFormGroup.get('quantity')?.hasError('digit')) {
+                                    <mat-error>Le prix doit être numérique !</mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    
+                }
+            </div>
+            @if (this.selected === 'line') {
+                <div class="edit-form">
+                    <div class="input-field">
+                        <mat-form-field class="medium-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description"
+                                placeholder="La description du service proposé."></textarea>
+                        </mat-form-field>
+                    </div>
                 </div>
             }
             <div class="input-field">
@@ -100,7 +115,7 @@
                 }
                 @if (line.designation.typeDesignation === 'LINE') {
                     <tr class="line">
-                        <td>{{line.designation.name}}</td>
+                        <td class="column">{{line.designation.name}}</td>
                         <td>{{line.designation.price}}</td>
                         <td>{{line.quantity}}</td>
                         <td>{{getLineTotal(line)}}</td>
@@ -108,6 +123,11 @@
                             <mat-icon (click)="deleteLine(line)">delete</mat-icon>
                         </td>
                     </tr>
+                    @if (line.designation.description && line.designation.description != '') {
+                        <tr class="line">
+                            <td colspan="5" class="line-description">{{line.designation.description}}</td>
+                        </tr>
+                    }
                 }
             }
             <tr>
