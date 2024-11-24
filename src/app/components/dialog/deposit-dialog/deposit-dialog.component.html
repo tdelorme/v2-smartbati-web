@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Verser un accompte</h2>
+<mat-dialog-content>
+    <p>Montant de l'accompte</p>
+    <mat-form-field>
+        <mat-label>En €</mat-label>
+        <input matInput [(ngModel)]="deposit" />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="cancel()">Annuler</button>
+    <button mat-button [mat-dialog-close]="deposit()" cdkFocusInitial>Valider</button>
+</mat-dialog-actions>
