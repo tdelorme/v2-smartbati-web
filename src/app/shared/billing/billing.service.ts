@@ -44,5 +44,9 @@ export class BillingService {
     return this.http.post<ApiResponse<boolean>>(`/api/billing/paid/${id}`, null);
   }
 
+  deposit(id: string, amount: number): Observable<ApiResponse<Billing>> {
+    return this.http.post<ApiResponse<Billing>>(`/api/billing/deposit/part/${id}/${amount}`, null);
+  }
+
 
 }
