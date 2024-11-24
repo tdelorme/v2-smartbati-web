@@ -14,7 +14,8 @@ import { DatePipe, DecimalPipe } from '@angular/common';
     selector: 'app-devis',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltipModule, DecimalPipe, DatePipe],
     templateUrl: './devis.component.html',
-    styleUrl: './devis.component.scss'
+    styleUrl: './devis.component.scss',
+    standalone: true,
 })
 export class DevisComponent implements AfterViewInit{
 

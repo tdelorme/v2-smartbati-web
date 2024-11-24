@@ -19,7 +19,8 @@ import { LoginRequest } from '../shared/login/login.request';
         MatError
     ],
     templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+    styleUrl: './login.component.scss',
+    standalone: true,
 })
 export class LoginComponent implements OnInit{
   public loginForm!: FormGroup;

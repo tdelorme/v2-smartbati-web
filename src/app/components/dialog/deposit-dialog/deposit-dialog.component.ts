@@ -18,7 +18,8 @@ import { MatInputModule } from '@angular/material/input';
         MatDialogClose
     ],
     templateUrl: './deposit-dialog.component.html',
-    styleUrl: './deposit-dialog.component.scss'
+    styleUrl: './deposit-dialog.component.scss',
+    standalone: true,
 })
 export class DepositDialogComponent {
   readonly dialogRef = inject(MatDialogRef<DepositDialogComponent>);

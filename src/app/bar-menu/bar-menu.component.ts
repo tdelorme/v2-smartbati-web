@@ -9,7 +9,8 @@ import { AuthService } from '../shared/auth.service';
     selector: 'app-bar-menu',
     imports: [MatToolbarModule, MatIconButton, MatIcon, RouterLink],
     templateUrl: './bar-menu.component.html',
-    styleUrl: './bar-menu.component.scss'
+    styleUrl: './bar-menu.component.scss',
+    standalone: true,
 })
 export class BarMenuComponent {
 

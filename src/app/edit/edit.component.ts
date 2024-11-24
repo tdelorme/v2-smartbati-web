@@ -41,7 +41,8 @@ import { Router } from '@angular/router';
         DecimalPipe
     ],
     templateUrl: './edit.component.html',
-    styleUrl: './edit.component.scss'
+    styleUrl: './edit.component.scss',
+    standalone: true,
 })
 export class EditComponent implements OnInit{
 

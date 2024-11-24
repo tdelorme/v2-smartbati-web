@@ -21,7 +21,8 @@ import { ErrorSnackBarComponent } from '../../snackbar/error-snack-bar/error-sna
         MatError
     ],
     templateUrl: './client-create.component.html',
-    styleUrl: './client-create.component.scss'
+    styleUrl: './client-create.component.scss',
+    standalone: true,
 })
 export class ClientCreateComponent implements OnInit{
 

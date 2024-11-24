@@ -21,7 +21,8 @@ import { ErrorSnackBarComponent } from '../snackbar/error-snack-bar/error-snack-
         MatError
     ],
     templateUrl: './settings.component.html',
-    styleUrl: './settings.component.scss'
+    styleUrl: './settings.component.scss',
+    standalone: true,
 })
 export class SettingsComponent implements OnInit{
   private _snackBar = inject(MatSnackBar);

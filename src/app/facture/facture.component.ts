@@ -17,7 +17,8 @@ import { DepositDialogComponent } from '../components/dialog/deposit-dialog/depo
     selector: 'app-facture',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltip, DecimalPipe, DatePipe],
     templateUrl: './facture.component.html',
-    styleUrl: './facture.component.scss'
+    styleUrl: './facture.component.scss',
+    standalone: true,
 })
 export class FactureComponent {
   displayedColumns: string[] = ['number', 'client', 'totalIncludingTax', 'deposit', 'type', 'due', 'actions'];

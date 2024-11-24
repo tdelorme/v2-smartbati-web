@@ -22,7 +22,8 @@ import { Router } from '@angular/router';
         MatError
     ],
     templateUrl: './register.component.html',
-    styleUrl: './register.component.scss'
+    styleUrl: './register.component.scss',
+    standalone: true,
 })
 export class RegisterComponent implements OnInit {
 

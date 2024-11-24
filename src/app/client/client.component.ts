@@ -6,7 +6,8 @@ import { CardComponent } from "../components/card/card.component";
     selector: 'app-client',
     imports: [CardComponent],
     templateUrl: './client.component.html',
-    styleUrl: './client.component.scss'
+    styleUrl: './client.component.scss',
+    standalone: true,
 })
 export class ClientComponent {
 

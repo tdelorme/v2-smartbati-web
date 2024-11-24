@@ -11,7 +11,8 @@ import { ClientService } from '../client.service';
     selector: 'app-client-all',
     imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule],
     templateUrl: './client-all.component.html',
-    styleUrl: './client-all.component.scss'
+    styleUrl: './client-all.component.scss',
+    standalone: true,
 })
 export class ClientAllComponent implements AfterViewInit{
 
