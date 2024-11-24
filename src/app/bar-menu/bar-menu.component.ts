@@ -6,11 +6,11 @@ import {RouterLink} from "@angular/router";
 import { AuthService } from '../shared/auth.service';
 
 @Component({
-  selector: 'app-bar-menu',
-  standalone: true,
-  imports: [MatToolbarModule, MatIconButton, MatIcon, RouterLink],
-  templateUrl: './bar-menu.component.html',
-  styleUrl: './bar-menu.component.scss'
+    selector: 'app-bar-menu',
+    imports: [MatToolbarModule, MatIconButton, MatIcon, RouterLink],
+    templateUrl: './bar-menu.component.html',
+    styleUrl: './bar-menu.component.scss',
+    standalone: true,
 })
 export class BarMenuComponent {
 

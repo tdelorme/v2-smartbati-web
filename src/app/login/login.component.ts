@@ -9,18 +9,18 @@ import { Router } from '@angular/router';
 import { LoginRequest } from '../shared/login/login.request';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    RxReactiveFormsModule,
-    MatError
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        RxReactiveFormsModule,
+        MatError
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    standalone: true,
 })
 export class LoginComponent implements OnInit{
   public loginForm!: FormGroup;

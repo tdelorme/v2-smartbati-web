@@ -6,20 +6,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'app-deposit-dialog',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose
-  ],
-  templateUrl: './deposit-dialog.component.html',
-  styleUrl: './deposit-dialog.component.scss'
+    selector: 'app-deposit-dialog',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        MatButtonModule,
+        MatDialogTitle,
+        MatDialogContent,
+        MatDialogActions,
+        MatDialogClose
+    ],
+    templateUrl: './deposit-dialog.component.html',
+    styleUrl: './deposit-dialog.component.scss',
+    standalone: true,
 })
 export class DepositDialogComponent {
   readonly dialogRef = inject(MatDialogRef<DepositDialogComponent>);

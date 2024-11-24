@@ -4,11 +4,11 @@ import { FactureComponent } from "../facture/facture.component";
 import { TypeBilling } from '../shared/model/billing.model';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [DevisComponent, FactureComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+    imports: [DevisComponent, FactureComponent],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss',
+    standalone: true,
 })
 export class DashboardComponent {
   PAID = TypeBilling.PAID;

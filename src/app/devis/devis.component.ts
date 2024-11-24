@@ -11,11 +11,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe, DecimalPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-devis',
-  standalone: true,
-  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltipModule, DecimalPipe, DatePipe],
-  templateUrl: './devis.component.html',
-  styleUrl: './devis.component.scss'
+    selector: 'app-devis',
+    imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltipModule, DecimalPipe, DatePipe],
+    templateUrl: './devis.component.html',
+    styleUrl: './devis.component.scss',
+    standalone: true,
 })
 export class DevisComponent implements AfterViewInit{
 

@@ -4,11 +4,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-card',
-  standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule],
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+    selector: 'app-card',
+    imports: [MatCardModule, MatIconModule, MatButtonModule],
+    templateUrl: './card.component.html',
+    styleUrl: './card.component.scss',
+    standalone: true,
 })
 export class CardComponent {
 
