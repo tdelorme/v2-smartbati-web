@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Billing, TypeBilling } from '../shared/model/billing.model';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { PageableApiResponse } from '../shared/model/api.response.model';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { DepositDialogComponent } from '../components/dialog/deposit-dialog/deposit-dialog.component';
 
 @Component({
   selector: 'app-facture',
@@ -19,7 +21,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
   styleUrl: './facture.component.scss'
 })
 export class FactureComponent {
-  displayedColumns: string[] = ['number', 'client', 'totalIncludingTax', 'type', 'due', 'actions'];
+  displayedColumns: string[] = ['number', 'client', 'totalIncludingTax', 'deposit', 'type', 'due', 'actions'];
   data: Billing[] = []
   resultsLength = 0
   @Input()
@@ -33,6 +35,8 @@ export class FactureComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Billing>;
+
+  readonly dialog = inject(MatDialog);
 
   constructor(private billingService: BillingService) {}
 
@@ -96,11 +100,27 @@ export class FactureComponent {
     });
   }
 
+  depositInvoice(id: string) {
+    const dialogRef = this.dialog.open(DepositDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.billingService.deposit(id, result).subscribe(result => {
+
+          const index = this.data.findIndex(d => d.id === id);
+          this.data[index] = result.data;
+
+          this.reRenderTable(false, id);
+        });
+      }
+    });
+  }
+
   private reRenderTable(isDeleted: boolean, id: string) {
     if (isDeleted) {
       this.data.splice(this.data.findIndex(d => d.id === id) ,1);
-      this.table.renderRows();
     }
+    this.table.renderRows();
   }
 
   getTypeLibelle(key: string): string {
