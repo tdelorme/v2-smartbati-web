@@ -24,24 +24,24 @@ import { ErrorSnackBarComponent } from '../snackbar/error-snack-bar/error-snack-
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-edit',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    RxReactiveFormsModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatError,
-    AsyncPipe,
-    DecimalPipe],
-  templateUrl: './edit.component.html',
-  styleUrl: './edit.component.scss'
+    selector: 'app-edit',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        RxReactiveFormsModule,
+        MatIconModule,
+        MatSnackBarModule,
+        MatError,
+        AsyncPipe,
+        DecimalPipe
+    ],
+    templateUrl: './edit.component.html',
+    styleUrl: './edit.component.scss'
 })
 export class EditComponent implements OnInit{
 

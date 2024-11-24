@@ -11,17 +11,17 @@ import { ConfirmSnackBarComponent } from '../snackbar/confirm-snack-bar/confirm-
 import { ErrorSnackBarComponent } from '../snackbar/error-snack-bar/error-snack-bar.component';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    RxReactiveFormsModule,
-    MatError],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss'
+    selector: 'app-settings',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        RxReactiveFormsModule,
+        MatError
+    ],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit{
   private _snackBar = inject(MatSnackBar);

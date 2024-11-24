@@ -11,18 +11,17 @@ import { ConfirmSnackBarComponent } from '../../snackbar/confirm-snack-bar/confi
 import { ErrorSnackBarComponent } from '../../snackbar/error-snack-bar/error-snack-bar.component';
 
 @Component({
-  selector: 'app-client-create',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    RxReactiveFormsModule,
-    MatError
-  ],
-  templateUrl: './client-create.component.html',
-  styleUrl: './client-create.component.scss'
+    selector: 'app-client-create',
+    imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        RxReactiveFormsModule,
+        MatError
+    ],
+    templateUrl: './client-create.component.html',
+    styleUrl: './client-create.component.scss'
 })
 export class ClientCreateComponent implements OnInit{
 

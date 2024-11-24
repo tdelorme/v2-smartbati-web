@@ -8,11 +8,10 @@ import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
 import { ClientService } from '../client.service';
 
 @Component({
-  selector: 'app-client-all',
-  standalone: true,
-  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule],
-  templateUrl: './client-all.component.html',
-  styleUrl: './client-all.component.scss'
+    selector: 'app-client-all',
+    imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule],
+    templateUrl: './client-all.component.html',
+    styleUrl: './client-all.component.scss'
 })
 export class ClientAllComponent implements AfterViewInit{
 

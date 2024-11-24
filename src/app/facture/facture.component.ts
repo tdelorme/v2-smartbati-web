@@ -14,11 +14,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DepositDialogComponent } from '../components/dialog/deposit-dialog/deposit-dialog.component';
 
 @Component({
-  selector: 'app-facture',
-  standalone: true,
-  imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltip, DecimalPipe, DatePipe],
-  templateUrl: './facture.component.html',
-  styleUrl: './facture.component.scss'
+    selector: 'app-facture',
+    imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, MatIconModule, MatTooltip, DecimalPipe, DatePipe],
+    templateUrl: './facture.component.html',
+    styleUrl: './facture.component.scss'
 })
 export class FactureComponent {
   displayedColumns: string[] = ['number', 'client', 'totalIncludingTax', 'deposit', 'type', 'due', 'actions'];
