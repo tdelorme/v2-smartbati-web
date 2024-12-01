@@ -34,6 +34,7 @@
                     <mat-icon (click)="downloadQuote(row.generatedFile)" #tooltip="matTooltip" matTooltip="Télécharger le devis" class="icon-table">download</mat-icon>
                     <mat-icon (click)="transformToInvoice(row.id)" #tooltip="matTooltip" matTooltip="Transformer le devis en facture" class="icon-table">request_quote</mat-icon>
                     <mat-icon (click)="deleteBilling(row.id)" #tooltip="matTooltip" matTooltip="Supprimer le devis" class="icon-table">delete</mat-icon>
+                    <mat-icon (click)="editQuote(row.id)" #tooltip="matTooltip" matTooltip="Editer le devis" class="icon-table">edit</mat-icon>
                 </td>
             </ng-container>
 

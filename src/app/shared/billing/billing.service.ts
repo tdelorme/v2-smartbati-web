@@ -15,6 +15,10 @@ export class BillingService {
     return this.http.post('/api/billing/create', billing);
   }
 
+  getById(id: string): Observable<ApiResponse<Billing>> {
+    return this.http.get<ApiResponse<Billing>>(`/api/billing/${id}`);
+  }
+
   getQuoteByPage(index: number, pageSize: number): Observable<PageableApiResponse<Billing[]>> {
     return this.http.get<PageableApiResponse<Billing[]>>(`/api/billing/quote/page/${index}/size/${pageSize}`);
   }

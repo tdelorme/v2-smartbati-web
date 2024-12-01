@@ -9,6 +9,7 @@ import { catchError, map, of, startWith, switchMap } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-devis',
@@ -32,7 +33,9 @@ export class DevisComponent implements AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Billing>;
 
-  constructor(private billingService: BillingService) {}
+  constructor(private billingService: BillingService,
+              private router: Router
+  ) {}
 
   ngAfterViewInit(): void {
       this.paginator.page.pipe(
@@ -77,6 +80,10 @@ export class DevisComponent implements AfterViewInit{
     this.billingService.delete(id).subscribe(result => {
       this.reRenderTable(result.data, id);
     });
+  }
+
+  editQuote(id: string) {
+    this.router.navigate(['edit', id]);
   }
 
   private reRenderTable(isDeleted: boolean, id: string) {

@@ -21,7 +21,7 @@ import { DesignationService } from '../shared/designation/designation.service';
 import { ConfirmSnackBarComponent } from '../snackbar/confirm-snack-bar/confirm-snack-bar.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorSnackBarComponent } from '../snackbar/error-snack-bar/error-snack-bar.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
     selector: 'app-edit',
@@ -69,6 +69,7 @@ export class EditComponent implements OnInit{
               private clientService: ClientService,
               private billingService: BillingService,
               private designationService: DesignationService,
+              private currentRoute: ActivatedRoute,
               private router: Router
   ) {}
 
@@ -113,6 +114,26 @@ export class EditComponent implements OnInit{
       }
     });
 
+    this.currentRoute.params.subscribe((params: Params) => {
+      if (params['id']) {
+        const idQuote = params['id'];
+
+        this.billingService.getById(idQuote).subscribe(response => {
+          const billing = response.data;
+
+          this.discountFormGroup.get('discount')?.setValue(billing.discountPercent);
+          this.discountFormGroup.get('client')?.setValue(billing.client);
+
+          if (billing.client) {
+            this.clientSelected = billing.client;
+          }
+
+          if (billing.lineQuantities) {
+            this.designations = billing.lineQuantities;
+          }
+        });
+      }
+    });
     
   }
 
