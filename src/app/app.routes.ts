@@ -19,6 +19,7 @@ export const routes: Routes = [
   { path: 'devis', component: DevisComponent, canActivate: [AuthGuard] },
   { path: 'facture', component: FactureComponent, canActivate: [AuthGuard] },
   { path: 'edit', component: EditComponent, canActivate: [AuthGuard] },
+  { path: 'edit/:id', component: EditComponent, canActivate: [AuthGuard] },
   { path: 'client', component: ClientComponent, canActivate: [AuthGuard]},
   { path: 'client/add', component: ClientCreateComponent, canActivate: [AuthGuard]},
   { path: 'client/all', component: ClientAllComponent, canActivate: [AuthGuard]},
